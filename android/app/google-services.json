@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "353426191939",
+    "project_id": "sigma-digital-solution",
+    "storage_bucket": "sigma-digital-solution.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353426191939:android:f19b42cfeac7cc6bdd46f6",
+        "android_client_info": {
+          "package_name": "com.example.sigma_digital_solution"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "353426191939-bsegtas83t7vhn8eohffjtm82bk7k3l2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sigma_digital_solution",
+            "certificate_hash": "154aaf071c8f4a5bd2a2f7cbf6c92f617afc8d01"
+          }
+        },
+        {
+          "client_id": "353426191939-bgmsirg82k6gilju7jlof3e5fjpmgvkv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOHfoX8SuHYqZMCbMnN57GLukiuQQU1o8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "353426191939-bgmsirg82k6gilju7jlof3e5fjpmgvkv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
