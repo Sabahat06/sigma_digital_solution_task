@@ -5,6 +5,7 @@ import 'package:sigma_digital_solution/controller/movie_controller.dart';
 import 'package:sigma_digital_solution/controller/movie_detail_controller.dart';
 import 'package:sigma_digital_solution/controller/my_google_map_controller.dart';
 import 'package:sigma_digital_solution/view/my_google_map.dart';
+import 'package:sigma_digital_solution/view/notification_screen.dart';
 import 'package:sigma_digital_solution/view/popular_movie_tab.dart';
 import 'package:sigma_digital_solution/view/upcoming_movie_tab.dart';
 
@@ -39,7 +40,7 @@ class MovieScreenTabs extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // Get.to(() => CurrentLocationScreen());
+                      Get.to(() => NotificationScreen());
                     },
                     child: Padding(
                       padding: EdgeInsets.only(top: 15.sp, right: 15.sp),
