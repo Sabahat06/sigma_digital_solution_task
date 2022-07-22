@@ -58,7 +58,7 @@ class NotificationScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(notificationController.notificationTitle![index], style: TextStyle(fontSize: 17.sp, color: Colors.white),),
-                      Text(notificationController.notificationDate![index].substring(0, 13), style: TextStyle(fontSize: 16.sp, color: Colors.white),),
+                      Text(notificationController.notificationDate![index].substring(0, 16), style: TextStyle(fontSize: 16.sp, color: Colors.white),),
                     ],
                   ),
                 ),
