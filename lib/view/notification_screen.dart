@@ -12,7 +12,7 @@ class NotificationScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white), onPressed: () {},),
+        leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white), onPressed: () {Get.back();},),
         title: Text('Notification', style: TextStyle(fontSize: 18.sp, color: Colors.white),),
       ),
       body: Padding(
@@ -20,12 +20,14 @@ class NotificationScreen extends StatelessWidget {
         child: Obx(
           () => notificationController.isProgressing.value
             ? const Center(child: CircularProgressIndicator(),)
-            : ListView.builder(
+            : notificationController.notificationTitle == null || notificationController.notificationTitle!.length==0
+              ? Center(child: Text('There is no Notification yet', style: TextStyle(fontSize: 18.sp,),),)
+              : ListView.builder(
                 // itemCount: notificationController.notifications.length,
-                itemCount: 10,
+                itemCount: notificationController.notificationTitle!.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return renderingNotification();
+                  return renderingNotification(index);
                 },
               ),
         ),
@@ -33,7 +35,7 @@ class NotificationScreen extends StatelessWidget {
     );
   }
 
-  renderingNotification() {
+  renderingNotification(int index) {
     return Card(
       elevation: 3,
       child: Container(
@@ -55,8 +57,8 @@ class NotificationScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Notification Title', style: TextStyle(fontSize: 17.sp, color: Colors.white),),
-                      Text('date', style: TextStyle(fontSize: 16.sp, color: Colors.white),),
+                      Text(notificationController.notificationTitle![index], style: TextStyle(fontSize: 17.sp, color: Colors.white),),
+                      Text(notificationController.notificationDate![index].substring(0, 13), style: TextStyle(fontSize: 16.sp, color: Colors.white),),
                     ],
                   ),
                 ),
@@ -64,7 +66,7 @@ class NotificationScreen extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.all(10.sp),
-              child: Text('First, in order to use the SharedPreferences , we have to use Flutters plugin for it. To do so, make sure dependencies in your pubspec. yaml file looks similar to this', style: TextStyle(fontSize: 17.sp), textAlign: TextAlign.justify,),
+              child: Text(notificationController.notificationBody![index], style: TextStyle(fontSize: 17.sp), textAlign: TextAlign.justify,),
             ),
           ],
         ),

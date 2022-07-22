@@ -61,7 +61,7 @@ class UpcomingMovieTab extends StatelessWidget {
                   Container(width: 60.w, child: Text(movie.title!, style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.bold), overflow: TextOverflow.ellipsis, maxLines: 1,)),
                   SizedBox(height: 10.sp,),
                   Text(movie.releaseDate!, style: TextStyle(fontSize: 16.sp, color: Colors.black38),),
-                  SizedBox(height: 20.sp,),
+                  SizedBox(height: 12.sp,),
                   Container(
                     height: 10.h,
                     width: 60.w,

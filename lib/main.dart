@@ -3,13 +3,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sigma_digital_solution/controller/movie_controller.dart';
 import 'package:sigma_digital_solution/controller/my_google_map_controller.dart';
-import 'package:sigma_digital_solution/model/notification_model.dart';
+import 'package:sigma_digital_solution/controller/notification_controller.dart';
 import 'package:sigma_digital_solution/services/local_notification_service.dart';
 import 'package:sigma_digital_solution/view/movie_screen_tabs.dart';
 
@@ -19,18 +17,18 @@ Future<void> backgroundHandler(RemoteMessage message) async {
 }
 
 void saveNotificationData(var message) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  NotificationController notificationController = Get.put(NotificationController());
   DateTime date = DateTime.now();
-  // Encode and store data in SharedPreferences
-  final String encodedData = NotificationModel.encode([
-    NotificationModel(title: message.notification!.title),
-    NotificationModel(body: message.notification!.body),
-    NotificationModel(date: date.toString()),
-  ]);
-  await prefs.setString('notification_data', encodedData);
-  final String? musicsString = await prefs.getString('notification_data');
-  final List<NotificationModel> musics = NotificationModel.decode(musicsString!);
-  print(musics);
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  List<String>? notificationTitle = await prefs.getStringList('notification_title')??[];
+  List<String>? notificationBody = await prefs.getStringList('notification_body')??[];
+  List<String>? notificationDate = await prefs.getStringList('notification_date')??[];
+  notificationTitle.add(message.notification!.title);
+  notificationBody.add(message.notification!.body);
+  notificationDate.add(date.toString());
+  prefs.setStringList("notification_title", notificationTitle);
+  prefs.setStringList("notification_body", notificationBody);
+  prefs.setStringList("notification_date", notificationDate);
 }
 
 void main() async {
