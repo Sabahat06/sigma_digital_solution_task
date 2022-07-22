@@ -26,7 +26,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
             onTap: () {Get.to(() => CurrentLocationScreen());},
             child: controller.userAddress.value == ''
               ? const Icon(Icons.location_on, color: Colors.white)
-              : Container(width: 90.w, child: Text(controller.userAddress.value, style: TextStyle(fontSize: 15.sp),)),
+              : Container(width: 80.w, child: Text(controller.userAddress.value, style: TextStyle(fontSize: 15.sp),)),
           ),
         ),
         centerTitle: true,
@@ -34,7 +34,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
       body: Obx(
         () => GoogleMap(
           onTap: controller.onTap,
-          initialCameraPosition: CameraPosition(target: controller.latlng.value, zoom: 10,),
+          initialCameraPosition: CameraPosition(target: controller.latlng.value, zoom: 12,),
           markers: {
             Marker(
               draggable: true,
@@ -44,12 +44,7 @@ class _CurrentLocationScreenState extends State<CurrentLocationScreen> {
               markerId: MarkerId('Current Location'),
               position: controller.latlng.value,
             ),
-          },
-          zoomControlsEnabled: false,
-          mapType: MapType.normal,
-          onMapCreated: (GoogleMapController controller) {
-            googleMapController = controller;
-          },
+          }
         ),
       ),
     );
