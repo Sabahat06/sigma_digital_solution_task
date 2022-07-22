@@ -3,12 +3,15 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:sigma_digital_solution/controller/movie_controller.dart';
 import 'package:sigma_digital_solution/controller/movie_detail_controller.dart';
+import 'package:sigma_digital_solution/controller/my_google_map_controller.dart';
+import 'package:sigma_digital_solution/view/my_google_map.dart';
 import 'package:sigma_digital_solution/view/popular_movie_tab.dart';
 import 'package:sigma_digital_solution/view/upcoming_movie_tab.dart';
 
 class MovieScreenTabs extends StatelessWidget {
-  MovieController movieController = Get.find();
   MovieDetailController movieDetailController = Get.put(MovieDetailController());
+  MovieController movieController = Get.find();
+  MyGoogleMapController myGoogleMapController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +22,29 @@ class MovieScreenTabs extends StatelessWidget {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
+            backgroundColor: Colors.black,
             leading: IconButton(icon: const Icon(Icons.arrow_back, size: 0, color: Colors.white), onPressed: () {},),
             leadingWidth: 0,
-            title: const Text('Categories'),
+            title: Obx(
+              () => GestureDetector(
+                onTap: () {Get.to(() => CurrentLocationScreen());},
+                child: myGoogleMapController.userAddress.value == ''
+                  ? const Icon(Icons.location_on, color: Colors.white)
+                  : Container(width: 70.w, child: Text(myGoogleMapController.userAddress.value, style: TextStyle(fontSize: 15.sp),)),
+              ),
+            ),
             actions: [
               Stack(
                 alignment: Alignment.topRight,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.notifications),
-                    onPressed: () {},
-                    color: Colors.black
+                  GestureDetector(
+                    onTap: () {
+                      // Get.to(() => CurrentLocationScreen());
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 15.sp, right: 15.sp),
+                      child: const Icon(Icons.notifications, color: Colors.white,),
+                    )
                   ),
                 ]
               )

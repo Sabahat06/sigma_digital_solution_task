@@ -63,12 +63,13 @@ class PopularMovieTab extends StatelessWidget {
                   Text(movie.releaseDate!, style: TextStyle(fontSize: 16.sp, color: Colors.black38),),
                   SizedBox(height: 20.sp,),
                   Container(
-                    height: 6.h,
+                    height: 10.h,
                     width: 60.w,
                     child: Text(movie.overview!,
-                      style: TextStyle(fontSize: 17.sp, fontWeight: FontWeight.w500),
+                      style: TextStyle(fontSize: 16.sp),
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
+                      maxLines: 4,
+                      textAlign: TextAlign.justify,
                     ),
                   )
                 ],

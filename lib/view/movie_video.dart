@@ -1,74 +1,56 @@
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:video_player/video_player.dart';
+import 'package:get/get.dart';
+import 'package:sigma_digital_solution/model/video_data.dart';
+import 'package:sigma_digital_solution/services/http_service.dart';
+import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
-class MovieVideo extends StatefulWidget{
+
+class MovieVideo extends StatefulWidget {
+  String movieID;
+  MovieVideo({required this.movieID});
   @override
   _MovieVideoState createState() => _MovieVideoState();
 }
 
 class _MovieVideoState extends State<MovieVideo> {
+  late YoutubePlayerController _controller;
+  VideoDataModel? videoData;
+  RxBool isProgressing = false.obs;
 
-  late VideoPlayerController _videoPlayerController;
-  late ChewieController _chewieController;
-  double _aspectRatio = 16 / 9;
   @override
-  initState() {
+  void deactivate() {
+    _controller.pause();
+    super.deactivate();
+  }
+
+  @override
+  void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.network('https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4');
-    _chewieController = ChewieController(
-      allowedScreenSleep: false,
-      allowFullScreen: true,
-      deviceOrientationsAfterFullScreen: [
-        DeviceOrientation.landscapeRight,
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ],
-      videoPlayerController: _videoPlayerController,
-      aspectRatio: _aspectRatio,
-      autoInitialize: true,
-      autoPlay: true,
-      showControls: true,
+    getVideoData();
+  }
+
+  getVideoData() async {
+    isProgressing.value = true;
+    videoData = await HttpService.playVideo(widget.movieID);
+    isProgressing.value = false;
+    _controller = YoutubePlayerController(
+      initialVideoId: videoData!.results!.first.key!,
+      params: const YoutubePlayerParams(
+        loop: true,
+        color: 'transparent',
+      )
     );
-    _chewieController.addListener(() {
-      if (_chewieController.isFullScreen) {
-        SystemChrome.setPreferredOrientations([
-          DeviceOrientation.landscapeRight,
-          DeviceOrientation.landscapeLeft,
-        ]);
-      } else {
-        SystemChrome.setPreferredOrientations([
-          DeviceOrientation.portraitUp,
-          DeviceOrientation.portraitDown,
-        ]);
-      }
-    });
   }
-
-  @override
-  void dispose() {
-    _videoPlayerController.dispose();
-    _chewieController.dispose();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.landscapeRight,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    super.dispose();
-  }
-
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Container(
-          child: Chewie(
-            controller: _chewieController,
-          ),
+    return SafeArea(
+      child: Obx(
+        () => isProgressing.value ? const Center(child: CircularProgressIndicator(),) : YoutubePlayerControllerProvider(
+          controller: _controller,
+          child: YoutubePlayerIFrame(
+            controller: _controller,
+          )
         ),
       ),
     );
